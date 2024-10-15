@@ -96,3 +96,6 @@
 *.jpg linguist-vendored
 *.gif linguist-vendored
 *.zip linguist-vendored
+*.html linguist-vendored
+*.pdf linguist-vendored
+*.css linguist-vendored
