@@ -1,52 +1,98 @@
-# Getting started
+# Library API REST
 
-## Generate services production files with Maven  
+This project is a library management system that allows users to manage books, post comments and ratings for books. The project is built using Spring Boot, Spring Security, and JWT. The project is also secured with HTTPS.
 
-### Run below command  
+## Tech stack
 
- `mvnw -X package`
+| **Technology** | **Description** |
+|-----------------|-----------------|
+| Java | 17 |
+| Spring Boot | 3.0.0 |
+| MySQL | 8.0.22 |
+| Maven | 3.9.4 |
+| Docker | 27.3.1 |
+| Swagger | 2.2.7|
 
-## Run database service with Docker  
+## Features
 
- `docker run --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=books -p 3306:3306 -d mysql:8.0.22`  
+- User registration
+- User login
+- User roles
+- Book management
+- Comment management
+- Rating management
+- HTTPS
+- Swagger
 
-## Run app from a terminal  
+## Getting started
 
-`java -jar target\rest_db_auth-0.0.1-SNAPSHOT.jar`  
+### Prerequisites
 
-## The app will be served at `http:\\localhost:8443\`
+- Java 17
+- Maven
+- Docker
 
-# How to use it  
+### Running the Application
 
-## Anonimous user  
+1. Clone the repository
 
-### Allowed to get ID and title of all books  
+2. Navigate to the project directory
 
-  `curl --location --request GET 'https://localhost:8443/api/v1/books/basic'`
+3. Run database service with Docker  
 
-### Allowed to get all comments and info of a book
+```bash
+docker run --rm -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=books -p 3306:3306 -d mysql:8.0.22`  
+```
 
-  `curl --location --request GET 'https://localhost:8443/api/v1/books/1'`
+4. Run the application  
 
-## Role user (all above +)  
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+  
+5. Access the application at `https://localhost:8443/`
 
-### Allowed to get all books information  
+## How to use it  
 
-  `curl --location --request GET 'https://localhost:8443/api/v1/books/' --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQYWJsbyIsImlhdCI6MTY3Mzk2MzkwNywiZXhwIjoxNjc0MDUwMzA3fQ.aEqiEYwrgFY-FNgCvDOuj-tmeAsip3nhi94q3BzCBUvgrzbBrwcLUDrlWfnnRCq8NWkYgfbKDbqK2Xw7fnYwuQ'`
+### Anonimous user  
 
-### Allowed to create a new book  
+#### Allowed to get ID and title of all books  
 
-  `curl --location --request POST 'https://localhost:8443/api/v1/books/' --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQYWJsbyIsImlhdCI6MTY3Mzk2MzkwNywiZXhwIjoxNjc0MDUwMzA3fQ.aEqiEYwrgFY-FNgCvDOuj-tmeAsip3nhi94q3BzCBUvgrzbBrwcLUDrlWfnnRCq8NWkYgfbKDbqK2Xw7fnYwuQ' --header 'Content-Type: application/json' --data-raw '{
+```json
+ curl --location --request GET 'https://localhost:8443/api/v1/books/basic'
+```
+
+#### Allowed to get all comments and info of a book
+
+```json
+curl --location --request GET 'https://localhost:8443/api/v1/books/1'
+```
+
+### Role user (all above +)  
+
+#### Allowed to get all books information  
+
+```json
+curl --location --request GET 'https://localhost:8443/api/v1/books/' --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQYWJsbyIsImlhdCI6MTY3Mzk2MzkwNywiZXhwIjoxNjc0MDUwMzA3fQ.aEqiEYwrgFY-FNgCvDOuj-tmeAsip3nhi94q3BzCBUvgrzbBrwcLUDrlWfnnRCq8NWkYgfbKDbqK2Xw7fnYwuQ'
+```
+
+#### Allowed to create a new book  
+
+```json
+curl --location --request POST 'https://localhost:8443/api/v1/books/' --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQYWJsbyIsImlhdCI6MTY3Mzk2MzkwNywiZXhwIjoxNjc0MDUwMzA3fQ.aEqiEYwrgFY-FNgCvDOuj-tmeAsip3nhi94q3BzCBUvgrzbBrwcLUDrlWfnnRCq8NWkYgfbKDbqK2Xw7fnYwuQ' --header 'Content-Type: application/json' --data-raw '{
     "title" : "libro 3",
     "summary" : "string",
     "author" : "string",
     "publisher": "string",
     "date" : "string"
-    }'`
+    }'
+```
 
-### Allowed to post a comment
+#### Allowed to post a comment
 
-  `curl --location --request POST 'https://localhost:8443/api/v1/comments/' \
+```json
+curl --location --request POST 'https://localhost:8443/api/v1/comments/' \
 --header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQYWJsbyIsImlhdCI6MTY3Mzk2MzkwNywiZXhwIjoxNjc0MDUwMzA3fQ.aEqiEYwrgFY-FNgCvDOuj-tmeAsip3nhi94q3BzCBUvgrzbBrwcLUDrlWfnnRCq8NWkYgfbKDbqK2Xw7fnYwuQ' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -54,21 +100,38 @@
     "rating" : 3,
     "userId" : 1,
     "bookId":1
-}'`
+}'
+```
 
-### Allowed to get a single comment
+#### Allowed to get a single comment
 
-`curl --location --request GET 'https://localhost:8443/api/v1/comments/1' \
---header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQYWJsbyIsImlhdCI6MTY3Mzk2MzkwNywiZXhwIjoxNjc0MDUwMzA3fQ.aEqiEYwrgFY-FNgCvDOuj-tmeAsip3nhi94q3BzCBUvgrzbBrwcLUDrlWfnnRCq8NWkYgfbKDbqK2Xw7fnYwuQ'`
+```json
+curl --location --request GET 'https://localhost:8443/api/v1/comments/1' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQYWJsbyIsImlhdCI6MTY3Mzk2MzkwNywiZXhwIjoxNjc0MDUwMzA3fQ.aEqiEYwrgFY-FNgCvDOuj-tmeAsip3nhi94q3BzCBUvgrzbBrwcLUDrlWfnnRCq8NWkYgfbKDbqK2Xw7fnYwuQ'
+```
 
-## Role admin (all above +)
+### Role admin (all above +)
 
-### Delete a book  
+#### Delete a book  
 
-`curl --location --request DELETE 'https://localhost:8443/api/v1/books/1' \
---header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQYWJsbyIsImlhdCI6MTY3Mzk2MzkwNywiZXhwIjoxNjc0MDUwMzA3fQ.aEqiEYwrgFY-FNgCvDOuj-tmeAsip3nhi94q3BzCBUvgrzbBrwcLUDrlWfnnRCq8NWkYgfbKDbqK2Xw7fnYwuQ'`
+```json
+curl --location --request DELETE 'https://localhost:8443/api/v1/books/1' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQYWJsbyIsImlhdCI6MTY3Mzk2MzkwNywiZXhwIjoxNjc0MDUwMzA3fQ.aEqiEYwrgFY-FNgCvDOuj-tmeAsip3nhi94q3BzCBUvgrzbBrwcLUDrlWfnnRCq8NWkYgfbKDbqK2Xw7fnYwuQ'
+```
 
-### Delete a comment  
+#### Delete a comment  
 
-`curl --location --request DELETE 'https://localhost:8443/api/v1/comments/1' \
---header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQYWJsbyIsImlhdCI6MTY3Mzk2MzkwNywiZXhwIjoxNjc0MDUwMzA3fQ.aEqiEYwrgFY-FNgCvDOuj-tmeAsip3nhi94q3BzCBUvgrzbBrwcLUDrlWfnnRCq8NWkYgfbKDbqK2Xw7fnYwuQ'`
+```json
+curl --location --request DELETE 'https://localhost:8443/api/v1/comments/1' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJQYWJsbyIsImlhdCI6MTY3Mzk2MzkwNywiZXhwIjoxNjc0MDUwMzA3fQ.aEqiEYwrgFY-FNgCvDOuj-tmeAsip3nhi94q3BzCBUvgrzbBrwcLUDrlWfnnRCq8NWkYgfbKDbqK2Xw7fnYwuQ'
+```
+
+## Change Log
+
+| **Version** | **Description** |
+|-------------|-----------------|
+| 0.0.1       | Initial release |
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
