@@ -18,13 +18,6 @@
 
 
 
-# HTML and CSS files
-*.html linguist-language=HTML
-*.css linguist-language=CSS
-
-
-
-
 # C# files
 *.cs linguist-language=C#
 
